@@ -1,0 +1,6 @@
+.content p {
+  color: var(--secondary-color);
+  text-align: center;
+  margin: 0;
+  font-weight: 800;
+}

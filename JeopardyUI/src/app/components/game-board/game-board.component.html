@@ -1,0 +1,15 @@
+<div class="content">
+  <div class="category" *ngFor="let category of data.jeopardy.categories">
+    <app-category-header
+      [setCategoryHeader]="category.categoryName"
+      (headerHeight)="onHeaderHeightChange($event)"
+      [style.height.px]="headerHeight"
+    ></app-category-header>
+    <div class="clues">
+      <app-clue-tile
+        *ngFor="let clue of category.clues; let i = index"
+        [setClue]="clue.boardPositionY === i + 1 ? clue : undefined"
+      ></app-clue-tile>
+    </div>
+  </div>
+</div>

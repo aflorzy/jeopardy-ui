@@ -1,0 +1,34 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.26);
+  padding: 15px;
+}
+
+.category,
+.category .clues {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.category app-category-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary-color);
+  background-color: var(--primary-color);
+  margin: 2px;
+  width: 150px;
+  min-height: 50px;
+}
+
+.category .clues app-clue-tile {
+  border: 1px solid var(--secondary-color);
+  background-color: var(--primary-color);
+  margin: 2px;
+  width: 150px;
+  height: 150px;
+}

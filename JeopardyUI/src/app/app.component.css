@@ -1,0 +1,23 @@
+::ng-deep :root {
+  --primary-color: #0000AF;
+  --secondary-color: #fab85b;
+  --background-color: #4A4453;
+  --accent-color-1: #AFA8BA;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.content {
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  color: var(--secondary-color)
+}
