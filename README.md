@@ -23,3 +23,6 @@ Reset the game board by clicking the reset button in the actions bar below the g
 ![Screenshot of web interface](./src/assets/jeopardy-ui-screenshot.png)
 ![Screenshot of clue screen](./src/assets/jeopardy-ui-clue.png)
 ![Screenshot of clue response](./src/assets/jeopardy-ui-response.png)
+
+## License
+This software is released under the MIT License. See the [LICENSE.md](./LICENSE.md) file for more information.
