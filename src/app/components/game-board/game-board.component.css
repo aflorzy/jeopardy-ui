@@ -1,34 +1,99 @@
-.content {
+@import url("https://fonts.cdnfonts.com/css/itc-korinna-std");
+
+.board-container {
   display: flex;
   flex-direction: row;
   box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.26);
-  padding: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  gap: 10px;
+  background-color: #111;
+  width: 1280px;
+  height: 720px;
 }
 
-.category,
-.category .clues {
+.board-container .category {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  gap: 16px;
+  overflow: hidden;
+}
+.board-container .category .clues {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
 }
 
-.category app-category-header {
+.board-container .category app-category-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--secondary-color);
   background-color: var(--primary-color);
-  margin: 2px;
-  width: 150px;
-  min-height: 50px;
+  padding: 10px;
+  height: calc(100% / 6 - 6px);
 }
 
-.category .clues app-clue-tile {
-  border: 1px solid var(--secondary-color);
+.board-container .category .clues app-clue-tile {
   background-color: var(--primary-color);
-  margin: 2px;
-  width: 150px;
-  height: 150px;
+  height: 100%;
+}
+.board-container .category .clues app-clue-tile:hover {
+  cursor: pointer;
+  background-color: #0060a1;
+}
+.board-container .category .clues app-clue-tile.clicked:hover {
+  cursor: default;
+  background-color: var(--primary-color);
+}
+
+.clue-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.26);
+  margin-top: 20px;
+  gap: 10px;
+  background-color: var(--primary-color);
+  width: 1280px;
+  height: 720px;
+}
+.clue-container:hover {
+  cursor: pointer;
+}
+
+.clue-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20%;
+}
+
+.correct-response {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clue-text,
+.correct-response p {
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-family: "ITC Korinna Std", sans-serif;
+  font-size: 55px;
+}
+.correct-response-title {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
 }

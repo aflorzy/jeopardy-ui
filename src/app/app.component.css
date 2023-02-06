@@ -1,8 +1,10 @@
+@import url("https://fonts.cdnfonts.com/css/itc-korinna-std");
+
 ::ng-deep :root {
-  --primary-color: #0000AF;
+  --primary-color: #0000af;
   --secondary-color: #fab85b;
-  --background-color: #4A4453;
-  --accent-color-1: #AFA8BA;
+  --background-color: #4a4453;
+  --accent-color-1: #afa8ba;
 }
 
 * {
@@ -10,7 +12,8 @@
 }
 
 .content {
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
+  background-color: #333;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -19,5 +22,19 @@
 }
 
 h1 {
-  color: var(--secondary-color)
+  color: var(--secondary-color);
+}
+
+.actions-bar {
+  height: 50px;
+  width: 1330px;
+  padding: 0 25px;
+  background-color: #555;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button i {
+  padding-right: 5px;
 }

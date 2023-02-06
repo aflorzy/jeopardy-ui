@@ -1,8 +1,25 @@
 <div class="content">
-  <h1>Jeopardy UI</h1>
+  <h1>{{ game.title }}</h1>
 
-  <app-game-board></app-game-board>
+  <select (change)="handleRoundChange($event)">
+    <option value="1">Jeopardy!</option>
+    <option value="2">Double Jeopardy!</option>
+  </select>
+
+  <app-game-board
+    *ngIf="!activeClue"
+    [setRound]="round"
+    [setGame]="game"
+    [setReset]="reset"></app-game-board>
+
+  <div class="actions-bar" *ngIf="!activeClue">
+    <button class="md-button" (click)="getNewGame('random')">
+      <i class="fa-solid fa-shuffle"></i>Random
+    </button>
+    <button class="md-button" (click)="resetBoard()">
+      <i class="fa-solid fa-rotate-left"></i>Reset
+    </button>
+  </div>
 
   <router-outlet></router-outlet>
 </div>
-

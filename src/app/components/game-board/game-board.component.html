@@ -1,15 +1,43 @@
-<div class="content">
-  <div class="category" *ngFor="let category of data.jeopardy.categories">
-    <app-category-header
-      [setCategoryHeader]="category.categoryName"
-      (headerHeight)="onHeaderHeightChange($event)"
-      [style.height.px]="headerHeight"
-    ></app-category-header>
-    <div class="clues">
-      <app-clue-tile
-        *ngFor="let clue of category.clues; let i = index"
-        [setClue]="clue.boardPositionY === i + 1 ? clue : undefined"
-      ></app-clue-tile>
+<div class="content" *ngIf="game && round">
+  <div
+    class="clue-container"
+    *ngIf="activeClue"
+    (click)="toggleShowCorrectResponse(activeClue)">
+    <div class="clue-text-container">
+      <p class="clue-text" *ngIf="showText === 2">
+        {{ activeClue.clueText | uppercase }}
+      </p>
+
+      <div class="correct-response" *ngIf="showText === 3">
+        <p class="correct-response-title">Correct Response:</p>
+        <p>
+          {{ activeClue.correctResponse | uppercase }}
+        </p>
+        <p></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-container" *ngIf="!activeClue">
+    <div
+      class="category"
+      [class.hidden]="activeClue"
+      *ngFor="
+        let category of round == 1
+          ? game.jeopardy.categories
+          : game.doubleJeopardy.categories
+      ">
+      <app-category-header
+        [setCategoryHeader]="category.categoryName"></app-category-header>
+      <div class="clues">
+        <app-clue-tile
+          *ngFor="let clue of category.clues; let i = index"
+          [class.clicked]="getHasBeenClicked(clue)"
+          [setRound]="round"
+          [setClue]="clue.boardPositionY === i + 1 ? clue : undefined"
+          [setHasBeenClicked]="getHasBeenClicked(clue)"
+          (clueEmitter)="toggleShowCorrectResponse($event)"></app-clue-tile>
+      </div>
     </div>
   </div>
 </div>

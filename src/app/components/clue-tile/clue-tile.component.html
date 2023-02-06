@@ -1,3 +1,11 @@
-<div class="content">
-  <p>{{ clue ? clue.clueText : "" }}</p>
+<div class="content" *ngIf="clue && !hasBeenClicked" (click)="onClueClick()">
+  <p class="clueValue">
+    {{
+      round == 1
+        ? clueValue1[clue.boardPositionY - 1]
+        : round == 2
+        ? clueValue2[clue.boardPositionY - 1]
+        : ""
+    }}
+  </p>
 </div>

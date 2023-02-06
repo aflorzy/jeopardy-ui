@@ -1,6 +1,7 @@
 .content p {
-  color: var(--secondary-color);
+  color: #fff;
   text-align: center;
   margin: 0;
-  font-weight: 800;
+  font-family: 'Swiss 911 Compressed', sans-serif;
+  font-weight: 700;
 }
