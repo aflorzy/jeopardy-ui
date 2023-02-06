@@ -73,9 +73,12 @@
   justify-content: center;
   align-items: center;
   padding: 0 20%;
+  width: 100%;
+  height: 100%;
 }
 
 .correct-response {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -92,6 +95,23 @@
 }
 .correct-response-title {
   text-decoration: underline;
+}
+
+.response-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+.incorrect {
+  height: 100px;
+  width: 100px;
+  background-color: var(--warn-color);
+}
+.correct {
+  height: 100px;
+  width: 100px;
+  background-color: var(--success-color);
 }
 
 .hidden {

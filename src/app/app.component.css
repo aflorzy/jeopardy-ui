@@ -5,6 +5,8 @@
   --secondary-color: #fab85b;
   --background-color: #4a4453;
   --accent-color-1: #afa8ba;
+  --success-color: #28a745;
+  --warn-color: #f44336;
 }
 
 * {
@@ -19,10 +21,14 @@
   justify-content: flex-start;
   align-items: center;
   min-height: 100vh;
+  padding-top: 20px;
 }
 
 h1 {
   color: var(--secondary-color);
+  font-family: "ITC Korinna Std", sans-serif;
+  font-size: 40px;
+  line-height: 40px;
 }
 
 .actions-bar {

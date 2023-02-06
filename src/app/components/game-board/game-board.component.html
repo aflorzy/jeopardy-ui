@@ -13,7 +13,18 @@
         <p>
           {{ activeClue.correctResponse | uppercase }}
         </p>
-        <p></p>
+        <div class="response-actions">
+          <button
+            class="incorrect"
+            (click)="setCorrectIncorrect(activeClue, 'incorrect')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <button
+            class="correct"
+            (click)="setCorrectIncorrect(activeClue, 'correct')">
+            <i class="fa-solid fa-check"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -32,11 +43,12 @@
       <div class="clues">
         <app-clue-tile
           *ngFor="let clue of category.clues; let i = index"
-          [class.clicked]="getHasBeenClicked(clue)"
+          [class.clicked]="getClueTileState(clue)?.clicked"
           [setRound]="round"
           [setClue]="clue.boardPositionY === i + 1 ? clue : undefined"
-          [setHasBeenClicked]="getHasBeenClicked(clue)"
-          (clueEmitter)="toggleShowCorrectResponse($event)"></app-clue-tile>
+          [setClueTileState]="getClueTileState(clue)"
+          (clueEmitter)="toggleShowCorrectResponse($event)"
+          (clueTileStateEmitter)="updateClueTileState($event)"></app-clue-tile>
       </div>
     </div>
   </div>

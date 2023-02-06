@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { ClueTileState } from "src/app/common/ClueTile";
 import { Category, Clue, Game } from "src/app/common/Game";
 
 @Component({
@@ -13,43 +14,33 @@ export class GameBoardComponent implements OnInit {
   round?: number;
   activeClue: Clue | undefined;
   showText: number = 1;
-  hasBeenClickedList1: HasBeenClicked[] = [];
-  hasBeenClickedList2: HasBeenClicked[] = [];
+  hasBeenClickedList1: ClueTileState[] = [];
+  hasBeenClickedList2: ClueTileState[] = [];
 
   @Input()
   set setGame(game: Game | undefined) {
     this.game = game;
-
     if (game) {
-      this.resetBoard()
-      // game.jeopardy.categories.forEach((category: Category) => {
-      //   category.clues.forEach((clue: Clue) => {
-      //     this.hasBeenClickedList1.push({
-      //       boardPosition: { x: clue.boardPositionX, y: clue.boardPositionY },
-      //       hasBeenClicked: false,
-      //     });
-      //   });
-      // });
-
-      // game.doubleJeopardy.categories.forEach((category: Category) => {
-      //   category.clues.forEach((clue: Clue) => {
-      //     this.hasBeenClickedList2.push({
-      //       boardPosition: { x: clue.boardPositionX, y: clue.boardPositionY },
-      //       hasBeenClicked: false,
-      //     });
-      //   });
-      // });
+      this.resetBoard();
     }
   }
 
   @Input()
   set setRound(round: number) {
     this.round = round;
-    this.hasBeenClickedList1 = [];
-    this.hasBeenClickedList2 = [];
-
     if (this.game) {
-      this.initHasBeenClicked(+round, this.game);
+      if (
+        (round === 1 && !this.hasBeenClickedList1) ||
+        this.hasBeenClickedList1.length === 0
+      ) {
+        this.initHasBeenClicked(+round, this.game);
+      }
+      if (
+        (round === 2 && !this.hasBeenClickedList2) ||
+        this.hasBeenClickedList2.length === 0
+      ) {
+        this.initHasBeenClicked(+round, this.game);
+      }
     }
   }
 
@@ -64,9 +55,7 @@ export class GameBoardComponent implements OnInit {
 
   resetBoard() {
     if (this.game) {
-      this.hasBeenClickedList1 = [];
       this.initHasBeenClicked(1, this.game);
-      this.hasBeenClickedList2 = [];
       this.initHasBeenClicked(2, this.game);
     }
   }
@@ -76,7 +65,7 @@ export class GameBoardComponent implements OnInit {
   }
 
   toggleShowCorrectResponse(clue: Clue) {
-    this.setHasBeenClicked(clue);
+    this.setClicked(clue);
     this.activeClue = clue;
     switch (this.showText) {
       case 1:
@@ -98,6 +87,7 @@ export class GameBoardComponent implements OnInit {
   initHasBeenClicked(round: number, game: Game) {
     switch (round) {
       case 1:
+        this.hasBeenClickedList1 = [];
         game.jeopardy.categories.forEach((category: Category) => {
           category.clues.forEach((clue: Clue) => {
             this.hasBeenClickedList1.push({
@@ -105,12 +95,14 @@ export class GameBoardComponent implements OnInit {
                 x: clue.boardPositionX,
                 y: clue.boardPositionY,
               },
-              hasBeenClicked: false,
+              clicked: false,
+              correct: false,
             });
           });
         });
         break;
       case 2:
+        this.hasBeenClickedList2 = [];
         game.doubleJeopardy.categories.forEach((category: Category) => {
           category.clues.forEach((clue: Clue) => {
             this.hasBeenClickedList2.push({
@@ -118,7 +110,8 @@ export class GameBoardComponent implements OnInit {
                 x: clue.boardPositionX,
                 y: clue.boardPositionY,
               },
-              hasBeenClicked: false,
+              clicked: false,
+              correct: false,
             });
           });
         });
@@ -126,34 +119,26 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  setHasBeenClicked(clue: Clue) {
-    let round = this.round ? +this.round : 0;
-    switch (round) {
-      case 1:
-        this.hasBeenClickedList1.forEach((item: HasBeenClicked) => {
-          if (
-            item.boardPosition.x == clue.boardPositionX &&
-            item.boardPosition.y == clue.boardPositionY
-          ) {
-            item.hasBeenClicked = true;
-          }
-        });
-        break;
-      case 2:
-        this.hasBeenClickedList2.forEach((item: HasBeenClicked) => {
-          if (
-            item.boardPosition.x == clue.boardPositionX &&
-            item.boardPosition.y == clue.boardPositionY
-          ) {
-            item.hasBeenClicked = true;
-          }
-        });
-        break;
+  setClicked(clue: Clue) {
+    let clueTileState = this.getClueTileState(clue);
+    if (clueTileState) {
+      this.updateClueTileState({ ...clueTileState, clicked: true });
     }
   }
 
-  getHasBeenClicked(clue: Clue): boolean {
-    let hasBeenClickedList: HasBeenClicked[] = [];
+  setCorrectIncorrect(clue: Clue, response: string) {
+    let clueTileState = this.getClueTileState(clue);
+    if (clueTileState) {
+      if (response === "correct") {
+        this.updateClueTileState({ ...clueTileState, correct: true });
+      } else if (response === "incorrect") {
+        this.updateClueTileState({ ...clueTileState, correct: false });
+      }
+    }
+  }
+
+  getClueTileState(clue: Clue): ClueTileState | undefined {
+    let hasBeenClickedList: ClueTileState[] = [];
     let round = this.round ? +this.round : 0;
     switch (round) {
       case 1:
@@ -165,18 +150,47 @@ export class GameBoardComponent implements OnInit {
     }
 
     hasBeenClickedList = hasBeenClickedList.filter(
-      (item: HasBeenClicked) =>
+      (item: ClueTileState) =>
         item.boardPosition.x == clue.boardPositionX &&
         item.boardPosition.y == clue.boardPositionY
     );
 
     return hasBeenClickedList && hasBeenClickedList.length > 0
-      ? hasBeenClickedList[0].hasBeenClicked
-      : false;
+      ? hasBeenClickedList[0]
+      : undefined;
   }
-}
 
-export interface HasBeenClicked {
-  boardPosition: { x: number; y: number };
-  hasBeenClicked: boolean;
+  updateClueTileState(state: ClueTileState) {
+    let round = this.round ? +this.round : 0;
+    switch (round) {
+      case 1:
+        this.hasBeenClickedList1 = this.hasBeenClickedList1.map(
+          (item: ClueTileState) => {
+            if (
+              item.boardPosition.x == state.boardPosition.x &&
+              item.boardPosition.y == state.boardPosition.y
+            ) {
+              return state;
+            } else {
+              return item;
+            }
+          }
+        );
+        break;
+      case 2:
+        this.hasBeenClickedList2 = this.hasBeenClickedList2.map(
+          (item: ClueTileState) => {
+            if (
+              item.boardPosition.x == state.boardPosition.x &&
+              item.boardPosition.y == state.boardPosition.y
+            ) {
+              return state;
+            } else {
+              return item;
+            }
+          }
+        );
+        break;
+    }
+  }
 }

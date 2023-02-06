@@ -1,4 +1,7 @@
-<div class="content" *ngIf="clue && !hasBeenClicked" (click)="onClueClick()">
+<div
+  class="content"
+  *ngIf="clue && clueTileState && !clueTileState.clicked"
+  (click)="onClueClick()">
   <p class="clueValue">
     {{
       round == 1
@@ -8,4 +11,22 @@
         : ""
     }}
   </p>
+</div>
+
+<div
+  class="content"
+  *ngIf="clue && clueTileState && clueTileState.clicked"
+  (mouseenter)="setHover = true"
+  (mouseleave)="setHover = false">
+  <p class="clueResponse">
+    <i class="fa-solid fa-xmark" *ngIf="!clueTileState.correct"></i>
+    <i class="fa-solid fa-check" *ngIf="clueTileState.correct"></i>
+  </p>
+  <div class="state-actions" [class.hidden]="!hover">
+    <i class="fa-solid fa-rotate-left" (click)="handleStateClick('reset')"></i>
+    <div>
+      <i class="fa-solid fa-xmark" (click)="handleStateClick('incorrect')"></i>
+      <i class="fa-solid fa-check" (click)="handleStateClick('correct')"></i>
+    </div>
+  </div>
 </div>

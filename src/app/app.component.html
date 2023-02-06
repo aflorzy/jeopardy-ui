@@ -1,11 +1,6 @@
 <div class="content">
   <h1>{{ game.title }}</h1>
 
-  <select (change)="handleRoundChange($event)">
-    <option value="1">Jeopardy!</option>
-    <option value="2">Double Jeopardy!</option>
-  </select>
-
   <app-game-board
     *ngIf="!activeClue"
     [setRound]="round"
@@ -16,6 +11,10 @@
     <button class="md-button" (click)="getNewGame('random')">
       <i class="fa-solid fa-shuffle"></i>Random
     </button>
+    <select (change)="handleRoundChange($event)">
+      <option value="1">Jeopardy!</option>
+      <option value="2">Double Jeopardy!</option>
+    </select>
     <button class="md-button" (click)="resetBoard()">
       <i class="fa-solid fa-rotate-left"></i>Reset
     </button>

@@ -1,27 +1,25 @@
 # JeopardyUI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+Web interface for playing and practicing existing Jeopardy! games. The game board is intended to be a replica (fonts, dimensions etc.) of the board on the show. Games are fetched from [the backend](https://github.com/aflorzy/jeopardy-parser-backend), which extracts game and clue data from J! Archive.
 
-## Development server
+Each game has 2 rounds (Final Jeopardy! not yet implemented). Each round has 6 categories. Each category has 5 clues (exception when TV round was not finished due to insufficient time).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Category names are listed in the top row of the game board table. Category clues are initially covered by dollar values which correspond to the difficulty of the clue. When the tile is clicked, the game board is covered in a blue canvas containing the clue text. When the canvas is clicked, the text changes to the correct response, along with buttons to indicate a Correct or Incorrect response.
 
-## Code scaffolding
+After the question has been answered, the response will replace the dollar value on the tile, indicating the clue has already been viewed and answered. The clue tile status can be updated or reset by hovering the tile and clicking one of the options that appears.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## To Use
 
-## Build
+Ensure NodeJS 18.13.0 or later is installed on your system. Clone this repository by running `git clone https://github.com/aflorzy/jeopardy-ui.git` in a terminal/command prompt. Navigate into the cloned directory and run `npm start`. The server will run on port 4200, so navigate to `http://localhost:4200/` in a web browser to access the web interface.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+You will be greeted by the previous game initially after each page refresh. This game is stored in the browser, and reduces the number of calls to the backend and J! Archive.
 
-## Running unit tests
+Get a random game by clicking the Random button below the game board.
+Switch between Jeopardy! and Double Jeopardy! by selecting between these in the dropdown below the game board.
+Reset the game board by clicking the reset button in the actions bar below the game board.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Screenshots
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Screenshot of web interface](./src/assets/jeopardy-ui-screenshot.png)
+![Screenshot of clue screen](./src/assets/jeopardy-ui-clue.png)
+![Screenshot of clue response](./src/assets/jeopardy-ui-response.png)

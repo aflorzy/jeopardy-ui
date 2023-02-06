@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   margin: 1px;
+  position: relative;
 }
 
 .clueValue {
@@ -35,4 +36,41 @@
   text-align: center;
   font-weight: 700;
   font-family: "ITC_Korinna", sans-serif;
+}
+
+.hidden {
+  visibility: hidden;
+}
+.fa-solid {
+  font-size: 30px;
+  line-height: 30px;
+  height: 100%;
+}
+.fa-rotate-left {
+  color: #ddd;
+  font-size: 25px;
+  line-height: 30px;
+}
+.fa-xmark {
+  color: var(--warn-color);
+}
+.fa-check {
+  color: var(--success-color);
+}
+
+.state-actions {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.state-actions i {
+  padding: 0 10px;
+}
+.state-actions i:hover {
+  background-color: #333;
 }

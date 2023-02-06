@@ -16,6 +16,13 @@ export class AppComponent {
 
   constructor(private gameService: GameService) {}
 
+  ngOnInit() {
+    let game = localStorage.getItem("previous");
+    if (game) {
+      this.game = JSON.parse(game);
+    }
+  }
+
   handleRoundChange(e: any) {
     this.round = e.target.value;
   }
@@ -25,6 +32,7 @@ export class AppComponent {
       this.gameService.getRandomGame().subscribe({
         next: (res) => {
           this.game = res;
+          localStorage.setItem("previous", JSON.stringify(res));
         },
         error: (e) => {
           console.error("Could not get game", e);
